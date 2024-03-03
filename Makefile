@@ -12,3 +12,9 @@ ps:
 
 shell:
 	docker-compose exec app bash
+
+dev:
+	docker-compose exec app npm run dev
+
+npm-build:
+	docker-compose exec app npm run build
