@@ -1,5 +1,12 @@
 import './bootstrap';
 import { createApp } from "vue";
 import App from "../views/App.vue";
+import { createVuetify } from 'vuetify';
+import router from './router';
+import 'vuetify/dist/vuetify.min.css';
+
 const app = createApp(App);
-app.mount("#app");
+const vuetify = createVuetify();
+app.use(router);
+app.use(vuetify);
+app.mount('#app');
