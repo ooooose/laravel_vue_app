@@ -1,9 +1,11 @@
 <script setup>
     defineProps({
-        id: String
+        id: String,
+        blog: Object
     })
 </script>
 
 <template>
-    {{ id }}
+    {{ id }}<br />
+    {{ blog.title }}
 </template>
