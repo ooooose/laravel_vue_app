@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('memo')->nullable();
+            $table->integer('price');
+            $table->boolean('is_selling')->default(true);
             $table->timestamps();
         });
     }
