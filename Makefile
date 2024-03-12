@@ -22,5 +22,8 @@ npm-build:
 migrate:
 	docker-compose exec app php artisan migrate
 
+fresh-seed:
+	docker-compose exec app php artisan migrate:fresh --seed
+
 routes:
 	docker-compose exec app php artisan route:list
