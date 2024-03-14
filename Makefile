@@ -18,3 +18,12 @@ dev:
 
 npm-build:
 	docker-compose exec app npm run build
+
+migrate:
+	docker-compose exec app php artisan migrate
+
+fresh-seed:
+	docker-compose exec app php artisan migrate:fresh --seed
+
+routes:
+	docker-compose exec app php artisan route:list
