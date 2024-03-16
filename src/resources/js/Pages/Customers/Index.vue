@@ -48,8 +48,8 @@ defineProps({
                             </tr>
                           </tbody>
                         </table>
-                        <Pagination class="mt-6" :links='customers.links'></Pagination>
                       </div>
+                      <Pagination class="mt-6" :links='customers.links'></Pagination>
                     </div>
                   </section>
                 </div>
