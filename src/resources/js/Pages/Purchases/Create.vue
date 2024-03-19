@@ -1,4 +1,5 @@
 <script setup>
+import { Inertia } from '@inertiajs/inertia';
 import { getToday } from '@/common'
 import { ref, computed } from 'vue'
 import { onMounted, reactive } from 'vue';
@@ -31,18 +32,34 @@ const quantity = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 const form = reactive({
     date: null,
-    customer_id: null
+    customer_id: null,
+    status: true,
+    items: []
 })
+
+const storePurchase = () => {
+    itemList.value.forEach(item => {
+        if (item.quantity > 0) {
+            form.items.push({
+                id: item.id,
+                quantity: item.quantity
+            })
+        }
+    })
+
+    Inertia.post(route('purchases.store'), form )
+}
 
 </script>
 
 
 <template>
+<form @submit.prevent="storePurchase">
     日付<br />
     <input type='date' name='date' v-model='form.date' /><br />
 
     会員名<br />
-    <select>
+    <select name='customer' v-model="form.customer_id">
         <option v-for="customer in customers" :value='customer.id' :key='customer.id'>
             {{ customer.id }} : {{ customer.name }}
         </option>
@@ -80,7 +97,8 @@ const form = reactive({
     <br />
 
     合計金額<br />
-    {{ totalPrice }}円
-
+    {{ totalPrice }}円 <br />
+    <button>登録する</button>
+</form>
 
 </template>
