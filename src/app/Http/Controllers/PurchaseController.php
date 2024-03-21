@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Purchase;
 use App\Models\Customer;
 use App\Models\Item;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
@@ -40,20 +41,28 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        $purchase = Purchase::create([
-            'customer_id' => $request->customer_id,
-            'status' => $request->status,
-        ]);
 
-
-        foreach($request->items as $item) {
-            $purchase->items()->attach($purchase->id, [
-                'item_id' => $item['id'],
-                'quantity' => $item['quantity']
+        DB::beginTransaction();
+        
+        try {
+            $purchase = Purchase::create([
+                'customer_id' => $request->customer_id,
+                'status' => $request->status
             ]);
-        }
+    
+            foreach($request->items as $item){
+                $purchase->items()->attach($purchase->id, [
+                    'item_id' => $item['id'],
+                    'quantity' => $item['quantity']
+                ]);
+            }
+            
+            DB::commit();
+            return to_route('dashboard');
+        } catch(\Exception $e) {
+            DB::rollback();
+        } 
 
-        return to_route('dashboard');
     }
 
     /**
