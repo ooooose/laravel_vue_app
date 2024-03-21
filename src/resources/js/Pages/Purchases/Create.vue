@@ -6,11 +6,13 @@ import { Inertia } from '@inertiajs/inertia'
 import { getToday } from '@/common'
 
 const props = defineProps({
-  'customers': Array,
-  'items' : Array
+  customers: Array,
+  items : Array,
+  errors: Object
 })
 
 onMounted(() => {
+  console.log(props.errors);
   form.date = getToday()
   props.items.forEach( item => {
     itemList.value.push({
@@ -95,6 +97,7 @@ const setCustomerId = id => {
                                             {{ customer.id }} : {{ customer.name }}
                                         </option>
                                     </select>
+                                    <div v-if="props.errors.customer_id" class="text-red-500" >{{ props.errors.customer_id }}</div>
                                 </div>
                                 </div>
                                 
@@ -124,9 +127,6 @@ const setCustomerId = id => {
                                 </tbody>
                               </table>
                             </div>
-
-
-                                
                                 <div class="p-2 w-full">
                                   <div class="">
                                     <label for="price" class="leading-7 text-sm text-gray-600">合計金額</label><br>
