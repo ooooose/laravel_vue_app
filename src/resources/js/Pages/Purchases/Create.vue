@@ -41,6 +41,10 @@ const totalPrice = computed(() => {
   return total
 })
 
+const setCustomer = id => {
+  form.customer_id = id
+}
+
 const storePurchase = () => {
   itemList.value.forEach( item => {
     if( item.quantity > 0){
@@ -90,7 +94,7 @@ const setCustomerId = id => {
                             <div class="p-2 w-full">
                                 <div class="relative">
                                   <label for="customer" class="leading-7 text-sm text-gray-600">会員名</label>
-                                    <MicroModal />
+                                    <MicroModal @update:customerId="setCustomerId" />
                                     <div v-if="props.errors.customer_id" class="text-red-500" >{{ props.errors.customer_id }}</div>
                                 </div>
                                 </div>
