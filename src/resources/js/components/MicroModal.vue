@@ -1,8 +1,29 @@
 <script setup>
-import { ref } from 'vue'
+import axios from 'axios';
+import { ref, onMounted, reactive } from 'vue'
 
 const isShow = ref(false)
 const toggleStatus = () => { isShow.value = !isShow.value}
+const search = ref('');
+const customers = reactive({});
+
+const seachCustomers = async () => {
+  try {
+    await axios.get(`/api/searchCustomers/?search=${search.value}`).then(
+      res => {
+        console.log(res.data)
+        customers.value = res.data
+      }
+    )
+    toggleStatus()
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+onMounted(() => {
+  console.log(customers)
+})
 
 </script>
 <template>
@@ -19,6 +40,8 @@ const toggleStatus = () => { isShow.value = !isShow.value}
           <p>
             Try hitting the <code>tab</code> key and notice how the focus stays within the modal itself. Also, <code>esc</code> to close modal.
           </p>
+          <input name="customer" v-model="search"/>
+          <button type="button" @click="seachCustomers">検索する</button>
         </main>
         <footer class="modal__footer">
           <button type="button" class="modal__btn modal__btn-primary">Continue</button>
