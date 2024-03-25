@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\Customer;
 use App\Models\Item;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 
 class PurchaseController extends Controller
 {
@@ -30,7 +31,7 @@ class PurchaseController extends Controller
             ->get();
 
         return Inertia::render('Purchases/Create', [
-            'items'     => $items,
+            'items' => $items,
         ]);
     }
 
