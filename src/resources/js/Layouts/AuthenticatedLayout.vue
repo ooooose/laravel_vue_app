@@ -140,7 +140,6 @@ const showingNavigationDropdown = ref(false);
                             購買履歴
                         </ResponsiveNavLink>
                     </div>
-                    </div>
 
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
