@@ -6,14 +6,12 @@ import { Inertia } from '@inertiajs/inertia'
 import dayjs from 'dayjs';
 
 const props = defineProps({
-  id: props.order[0].id,
   items : Array,
   order: Array,
   errors: Object
 })
 
 onMounted(() => {
-  console.log(dayjs(props.order[0].created_at).format('YYYY/MM/DD'))
   props.items.forEach( item => {
     itemList.value.push({
       id: item.id,
@@ -28,6 +26,7 @@ const itemList = ref([])
 
 
 const form = reactive({
+  id: props.order[0].id,
   date: dayjs(props.order[0].created_at).format('YYYY-MM-DD'),
   customer_id: props.order[0].customer_id,
   status: props.order[0].status,
