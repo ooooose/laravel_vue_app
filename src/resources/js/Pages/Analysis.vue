@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
 import { Head } from '@inertiajs/vue3';
 import { reactive, onMounted } from 'vue';
 import { getToday } from '@/common'
@@ -11,8 +12,25 @@ onMounted(() => {
 
 const form = reactive({
     startDate: null,
-    endDate: null
+    endDate: null,
+    type: 'perDay'
 })
+
+const getData = async () => {
+    try {
+        await axios.get('/api/analysis', {
+            params: {
+            startDate: form.startDate,
+            endDate: form.endDate,
+            type: form.type
+        }})
+        .then(res => {
+            console.log(res.data)
+        })
+    } catch (e) {
+        console.log(e.message)
+    }
+}
 
 </script>
 
@@ -28,7 +46,7 @@ const form = reactive({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <form>
+                        <form @submit.prevent="getData">
                             From: <input type="date" name="startDate" v-model="form.startDate" /><br />
                             To: <input type="date" name="endDate" v-model="form.endDate" /><br />
                             <button class="mt-4 flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">分析する</button>
